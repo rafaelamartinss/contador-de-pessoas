@@ -14,6 +14,24 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  int _people = 0;
+  String __infoText = "Pode Entrar!";
+
+  void _peopleChange(int delta) {
+    setState(() {
+      _people += delta;
+
+      if(_people >= 20) {
+        __infoText = "Lotado!";
+      } else if(_people < 0) {
+        __infoText= "Mundo invertido?";
+      } else {
+        __infoText = "Pode Entrar!";
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -23,12 +41,12 @@ class _HomeState extends State<Home> {
           fit: BoxFit.cover,
           height: 1000.0,
         ),
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: <
-            Widget>[
+        Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
           Text(
-            "Pessoas: 0",
-            style:
-            TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            "Pessoas: $_people",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -40,7 +58,9 @@ class _HomeState extends State<Home> {
                       "+1",
                       style: TextStyle(fontSize: 40.0, color: Colors.white),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _peopleChange(1);
+                    },
                   )),
               Padding(
                   padding: EdgeInsets.all(10.0),
@@ -49,12 +69,14 @@ class _HomeState extends State<Home> {
                       "-1",
                       style: TextStyle(fontSize: 40.0, color: Colors.white),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _peopleChange(-1);
+                    },
                   ))
             ],
           ),
           Text(
-            "Pode Entrar!",
+            __infoText,
             style:
             TextStyle(color: Colors.white, fontStyle: FontStyle.italic),
           )
